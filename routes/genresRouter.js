@@ -1,6 +1,6 @@
 import { Router } from "express";
 import {
-  getAllGenres,
+  getGenres,
   createGenresGet,
   createGenresPost,
   genreInfoGet,
@@ -8,7 +8,7 @@ import {
 
 const genresRouter = Router();
 
-genresRouter.get("/", getAllGenres);
+genresRouter.get("/", getGenres);
 
 genresRouter.get("/new", createGenresGet);
 

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= locals.subject %> Info</title>
+</head>
+<body>
+    <% const linktext = locals.title.toLowerCase(); %> 
+    <a href="/<%= linktext %>">Back to <%= locals.title %></a>
+    <h1><%= locals.subject %></h1>
+    <ul>
+        <% if (locals.games.length === 0) { %>
+            <p>No games currently added for <%= locals.subject %>.</p>
+        <% } else {%>
+            <% locals.games.forEach(game => { %>
+                <li><a href="/games/<%= game.id %>"><%= game.title %></a></li>
+            <% }); %>
+        <% } %>
+    </ul>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %> List</title>
+</head>
+<body>
+    <h1>All <%= title %></h1>
+    <ul>
+        <% if (title === "Games") {%>
+            <% locals.games.forEach(game => {  %>
+                <li><a href="/games/<%= game.id %>"><%= game.title %></a></li>
+            <% }); %>
+        <% } else if (title === "Developers") { %>
+            <% locals.developers.forEach(dev => {  %>
+                <li><a href="/developers/<%= dev.id %>"><%= dev.companyname %></a></li>
+            <% }); %>
+        <% } else { %>
+            <% locals.genres.forEach(genre => {  %>
+                <li><a href="/genres/<%= genre.id %>"><%= genre.type %></a></li>
+            <% }); %>
+        <% } %>
+    </ul>
+</body>
+</html>

@@ -1,6 +1,6 @@
 import { Router } from "express";
 import {
-  getAllDevelopers,
+  getDevelopers,
   createDevelopersGet,
   createDevelopersPost,
   developerInfoGet,
@@ -8,7 +8,7 @@ import {
 
 const developersRouter = Router();
 
-developersRouter.get("/", getAllDevelopers);
+developersRouter.get("/", getDevelopers);
 
 developersRouter.get("/new", createDevelopersGet);
 

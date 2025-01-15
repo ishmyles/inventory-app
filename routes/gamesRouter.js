@@ -1,6 +1,6 @@
 import { Router } from "express";
 import {
-  getAllGames,
+  getGames,
   createGameGet,
   createGamePost,
   gameInfoGet,
@@ -8,7 +8,7 @@ import {
 
 const gamesRouter = Router();
 
-gamesRouter.get("/", getAllGames);
+gamesRouter.get("/", getGames);
 
 gamesRouter.get("/new", createGameGet);
 
