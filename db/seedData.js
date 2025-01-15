@@ -10,7 +10,7 @@ DROP TABLE IF EXISTS genres;
 
 CREATE TABLE IF NOT EXISTS developers (
   id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-  name VARCHAR ( 50 )
+  companyName VARCHAR ( 50 )
 );
 
 CREATE TABLE IF NOT EXISTS genres (
@@ -68,7 +68,7 @@ VALUES
   ('MOBA'),
   ('Hack & slash');
 
-INSERT INTO developers (name)
+INSERT INTO developers (companyName)
 VALUES
   ('FromSoftware'),
   ('Riot Games'),
