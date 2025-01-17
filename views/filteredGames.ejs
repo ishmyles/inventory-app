@@ -6,6 +6,7 @@
     <title><%= locals.subject %> Info</title>
 </head>
 <body>
+    <%- include('partials/navbar'); -%>
     <% const linktext = locals.title.toLowerCase(); %> 
     <a href="/<%= linktext %>">Back to <%= locals.title %></a>
     <h1><%= locals.subject %></h1>
@@ -18,5 +19,8 @@
             <% }); %>
         <% } %>
     </ul>
+    <form action="/<%= locals.title.toLowerCase() %>/<%= locals.id %>/delete" method="post">
+        <button type="submit">Delete</button>
+    </form>
 </body>
 </html>

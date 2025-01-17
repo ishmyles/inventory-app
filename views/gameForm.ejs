@@ -6,6 +6,7 @@
     <title><%= locals.action %> Game Form</title>
 </head>
 <body>
+    <%- include('partials/navbar'); -%>
     <h1><%= locals.action %> Game Form</h1>
     <% if (locals.formErr) { %>
         <% locals.formErr.forEach(err => { %>

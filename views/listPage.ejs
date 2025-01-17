@@ -6,6 +6,7 @@
     <title><%= title %> List</title>
 </head>
 <body>
+    <%- include('partials/navbar'); -%>
     <h1>All <%= title %></h1>
     <% if (title === "Games") { %>
         <a href="/games/new">Add a new game</a>
