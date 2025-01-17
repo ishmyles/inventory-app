@@ -210,3 +210,15 @@ export const updateGenre = async ({ id, type }) => {
     [id, type]
   );
 };
+
+export const deleteGame = async (id) => {
+  await pool.query(`DELETE FROM games WHERE id = $1`, [id]);
+};
+
+export const deleteDev = async (id) => {
+  await pool.query(`DELETE FROM developers WHERE id = $1`, [id]);
+};
+
+export const deleteGenre = async (id) => {
+  await pool.query(`DELETE FROM genres WHERE id = $1`, [id]);
+};

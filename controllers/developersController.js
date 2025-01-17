@@ -1,5 +1,6 @@
 import {
   createDeveloper,
+  deleteDev,
   getAllDevelopers,
   getDeveloperById,
   getGamesByDeveloper,
@@ -37,10 +38,12 @@ export const createDevelopersPost = asyncHandler(async (req, res) => {
 });
 
 export const developerInfoGet = asyncHandler(async (req, res) => {
-  const filteredList = await getGamesByDeveloper(req.params.id);
+  const id = req.params.id;
+  const filteredList = await getGamesByDeveloper(id);
 
   res.render("filteredGames", {
     title: "Developers",
+    id: id,
     subject: filteredList.companyname,
     games: filteredList.games,
   });
@@ -62,4 +65,12 @@ export const developerUpdatePost = asyncHandler(async (req, res) => {
   const updatedDevData = { id: id, ...req.body };
   await updateDeveloper(updatedDevData);
   res.redirect("/developers/" + id);
+});
+
+export const developerDeletePost = asyncHandler(async (req, res) => {
+  const id = req.params.id;
+
+  await deleteDev(id);
+
+  res.redirect("/developers");
 });

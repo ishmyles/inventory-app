@@ -7,6 +7,7 @@ import {
   developerInfoGet,
   developerUpdateGet,
   developerUpdatePost,
+  developerDeletePost,
 } from "../controllers/developersController.js";
 
 const developersRouter = Router();
@@ -26,5 +27,7 @@ developersRouter.post(
   validateDeveloperForm,
   developerUpdatePost
 );
+
+developersRouter.post("/:id/delete", developerDeletePost);
 
 export default developersRouter;

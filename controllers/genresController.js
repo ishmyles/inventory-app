@@ -4,6 +4,7 @@ import {
   createGenre,
   getGenreById,
   updateGenre,
+  deleteGenre,
 } from "../db/queries.js";
 import asyncHandler from "express-async-handler";
 import { validationResult } from "express-validator";
@@ -32,10 +33,12 @@ export const createGenresPost = asyncHandler(async (req, res) => {
 });
 
 export const genreInfoGet = asyncHandler(async (req, res) => {
-  const filteredList = await getGamesByGenre(req.params.id);
+  const id = req.params.id;
+  const filteredList = await getGamesByGenre(id);
 
   res.render("filteredGames", {
     title: "Genres",
+    id: id,
     subject: filteredList.type,
     games: filteredList.games,
   });
@@ -57,4 +60,12 @@ export const genreUpdatePost = asyncHandler(async (req, res) => {
   const updatedGenreData = { id: id, ...req.body };
   await updateGenre(updatedGenreData);
   res.redirect("/genres/" + id);
+});
+
+export const genreDeletePost = asyncHandler(async (req, res) => {
+  const id = req.params.id;
+
+  await deleteGenre(id);
+
+  res.redirect("/genres");
 });

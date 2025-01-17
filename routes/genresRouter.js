@@ -7,6 +7,7 @@ import {
   genreInfoGet,
   genreUpdateGet,
   genreUpdatePost,
+  genreDeletePost,
 } from "../controllers/genresController.js";
 
 const genresRouter = Router();
@@ -22,5 +23,7 @@ genresRouter.get("/:id", genreInfoGet);
 genresRouter.get("/:id/update", genreUpdateGet);
 
 genresRouter.post("/:id/update", validateGenreForm, genreUpdatePost);
+
+genresRouter.post("/:id/delete", genreDeletePost);
 
 export default genresRouter;

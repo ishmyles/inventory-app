@@ -7,6 +7,7 @@ import {
   gameInfoGet,
   gameUpdateGet,
   gameUpdatePost,
+  gameDeletePost,
 } from "../controllers/gamesController.js";
 
 const gamesRouter = Router();
@@ -22,5 +23,7 @@ gamesRouter.get("/:id", gameInfoGet);
 gamesRouter.get("/:id/update", gameUpdateGet);
 
 gamesRouter.post("/:id/update", validateGameForm, gameUpdatePost);
+
+gamesRouter.post("/:id/delete", gameDeletePost);
 
 export default gamesRouter;

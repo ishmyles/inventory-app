@@ -5,6 +5,7 @@ import {
   createGame,
   getAllGenres,
   updateGame,
+  deleteGame,
 } from "../db/queries.js";
 import asyncHandler from "express-async-handler";
 import { validationResult } from "express-validator";
@@ -73,4 +74,12 @@ export const gameUpdatePost = asyncHandler(async (req, res) => {
   await updateGame(updatedGameData);
 
   res.redirect("/games/" + id);
+});
+
+export const gameDeletePost = asyncHandler(async (req, res) => {
+  const id = req.params.id;
+
+  await deleteGame(id);
+
+  res.redirect("/games");
 });

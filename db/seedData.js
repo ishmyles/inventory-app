@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS game_genres (
   id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
   gameId INTEGER,
   genreId INTEGER,
-  FOREIGN KEY ( gameId ) REFERENCES games( id ),
+  FOREIGN KEY ( gameId ) REFERENCES games( id ) ON DELETE CASCADE,
   FOREIGN KEY ( genreId ) REFERENCES genres( id )
 );
 
