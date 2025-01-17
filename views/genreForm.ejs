@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Genre Form</title>
+</head>
+<body>
+    <h1>Add Genre Form</h1>
+    <% if (locals.err) { %>
+        <ul>
+            <li><%= err %></li>
+        </ul>
+    <% } %>
+    <form action="/genres/new" method="post">
+        <label for="type">Genre Type</label>
+        <input type="text" name="type" id="type">
+        <button type="submit">Add</button>
+    </form>
+</body>
+</html>

@@ -79,3 +79,55 @@ export const getGamesByGenre = async (genreId) => {
   );
   return { ...genre.rows[0], games: rows };
 };
+
+export const createGame = async ({
+  title,
+  img,
+  developer,
+  releaseYear,
+  description,
+  notes,
+  isCompleted,
+  genre,
+}) => {
+  const gamesQuery = `
+    INSERT INTO games (title, img, developer, releaseYear, description, notes, isCompleted)
+    VALUES ($1, $2, $3, $4, $5, $6, $7);`;
+
+  const values1 = [
+    title,
+    img,
+    developer,
+    releaseYear,
+    description,
+    notes,
+    isCompleted,
+  ];
+
+  const genresQuery = `
+  INSERT INTO game_genres (gameId, genreId)
+  VALUES ($1, $2);`;
+
+  const values2 = [...genre];
+
+  await pool.query(gamesQuery, values1);
+
+  const selectedGame = await pool.query(
+    `SELECT id FROM games WHERE title = $1;`,
+    [title]
+  );
+
+  const id = selectedGame.rows[0].id;
+
+  values2.forEach(async (value) => await pool.query(genresQuery, [id, value]));
+};
+
+export const createDeveloper = async ({ companyName }) => {
+  await pool.query(`INSERT INTO developers (companyName) VALUES ($1);`, [
+    companyName,
+  ]);
+};
+
+export const createGenre = async ({ type }) => {
+  await pool.query(`INSERT INTO genres (type) VALUES ($1);`, [type]);
+};

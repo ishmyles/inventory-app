@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { validateDeveloperForm } from "../utils/formValidation.js";
 import {
   getDevelopers,
   createDevelopersGet,
@@ -12,7 +13,7 @@ developersRouter.get("/", getDevelopers);
 
 developersRouter.get("/new", createDevelopersGet);
 
-developersRouter.post("/new", createDevelopersPost);
+developersRouter.post("/new", validateDeveloperForm, createDevelopersPost);
 
 developersRouter.get("/:id", developerInfoGet);
 

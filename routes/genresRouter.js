@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { validateGenreForm } from "../utils/formValidation.js";
 import {
   getGenres,
   createGenresGet,
@@ -12,7 +13,7 @@ genresRouter.get("/", getGenres);
 
 genresRouter.get("/new", createGenresGet);
 
-genresRouter.post("/new", createGenresPost);
+genresRouter.post("/new", validateGenreForm, createGenresPost);
 
 genresRouter.get("/:id", genreInfoGet);
 

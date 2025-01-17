@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { validateGameForm } from "../utils/formValidation.js";
 import {
   getGames,
   createGameGet,
@@ -12,7 +13,7 @@ gamesRouter.get("/", getGames);
 
 gamesRouter.get("/new", createGameGet);
 
-gamesRouter.post("/new", createGamePost);
+gamesRouter.post("/new", validateGameForm, createGamePost);
 
 gamesRouter.get("/:id", gameInfoGet);
 
