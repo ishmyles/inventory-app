@@ -15,6 +15,8 @@ const _PORT = process.env.PORT || 3000;
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
+app.use(express.urlencoded({ extended: true }));
+
 app.use("/games", gamesRouter);
 app.use("/genres", genresRouter);
 app.use("/developers", developersRouter);
@@ -22,5 +24,9 @@ app.use("/developers", developersRouter);
 app.get("/", (req, res) => res.render("index"));
 
 app.get("*", (req, res) => res.send("404: Page not found."));
+
+app.use((err, req, res, next) => {
+  res.status(500).send(err);
+});
 
 app.listen(_PORT, () => console.log(`Server now listening on port ${_PORT}`));
