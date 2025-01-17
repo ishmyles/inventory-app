@@ -43,6 +43,17 @@ export const getGame = async (id) => {
   return { ...games.rows[0], genres: genres.rows };
 };
 
+export const getDeveloperById = async (id) => {
+  const { rows } = await pool.query(
+    `
+        SELECT * FROM developers
+        WHERE id = $1`,
+    [id]
+  );
+
+  return rows[0];
+};
+
 export const getGamesByDeveloper = async (devId) => {
   const developer = await pool.query(
     `
@@ -59,6 +70,17 @@ export const getGamesByDeveloper = async (devId) => {
     [devId]
   );
   return { ...developer.rows[0], games: rows };
+};
+
+export const getGenreById = async (id) => {
+  const { rows } = await pool.query(
+    `
+            SELECT * FROM genres
+            WHERE id = $1`,
+    [id]
+  );
+
+  return rows[0];
 };
 
 export const getGamesByGenre = async (genreId) => {
@@ -130,4 +152,61 @@ export const createDeveloper = async ({ companyName }) => {
 
 export const createGenre = async ({ type }) => {
   await pool.query(`INSERT INTO genres (type) VALUES ($1);`, [type]);
+};
+
+export const updateGame = async ({
+  id,
+  title,
+  img,
+  developer,
+  releaseYear,
+  description,
+  notes,
+  isCompleted,
+  genre,
+}) => {
+  const query = `
+    UPDATE games
+    SET title = $2, img = $3, developer = $4, releaseYear = $5, description = $6, notes = $7, isCompleted = $8 
+    WHERE id = $1;`;
+
+  await pool.query(query, [
+    id,
+    title,
+    img,
+    developer,
+    releaseYear,
+    description,
+    notes,
+    isCompleted,
+  ]);
+
+  await pool.query(`DELETE FROM game_genres WHERE gameId = $1;`, [id]);
+  genre.forEach(
+    async (type) =>
+      await pool.query(
+        `INSERT INTO game_genres (gameId, genreId) VALUES ($1, $2);`,
+        [id, type]
+      )
+  );
+};
+
+export const updateDeveloper = async ({ id, companyName }) => {
+  await pool.query(
+    `
+        UPDATE developers 
+        SET companyName = $2
+        WHERE id = $1`,
+    [id, companyName]
+  );
+};
+
+export const updateGenre = async ({ id, type }) => {
+  await pool.query(
+    `
+          UPDATE genres 
+          SET type = $2
+          WHERE id = $1`,
+    [id, type]
+  );
 };

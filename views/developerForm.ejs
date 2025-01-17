@@ -3,19 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Developer Form</title>
+    <title><%= locals.action %> Developer Form</title>
 </head>
 <body>
-    <h1>Add Developer Form</h1>
+    <h1><%= locals.action %> Developer Form</h1>
     <% if (locals.err) { %>
         <ul>
             <li><%= err %></li>
         </ul>
     <% } %>
-    <form action="/developers/new" method="post">
+    <form action="<%= locals.actionLink %>" method="post">
         <label for="companyName">Developer Studio Name</label>
-        <input type="text" name="companyName" id="companyName">
-        <button type="submit">Add</button>
+        <% if (locals.dev) { %>
+            <input type="text" name="companyName" id="companyName" value="<%= dev.companyname %>">
+        <% } else { %>
+            <input type="text" name="companyName" id="companyName">
+        <% } %>
+        <button type="submit"><%= locals.action %></button>
     </form>
 </body>
 </html>

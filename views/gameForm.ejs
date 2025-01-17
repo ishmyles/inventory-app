@@ -3,20 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Game Form</title>
+    <title><%= locals.action %> Game Form</title>
 </head>
 <body>
-    <h1>Add Game Form</h1>
+    <h1><%= locals.action %> Game Form</h1>
     <% if (locals.formErr) { %>
         <% locals.formErr.forEach(err => { %>
             <li><%= err.msg %></li>
         <% }); %>
     <% } %>
-    <form action="/games/new" method="post" style="display: flex; flex-direction: column; width: 400px;">
+    <form action="<%= locals.actionLink %>" method="post" style="display: flex; flex-direction: column; width: 400px;">
         <label for="title">Title</label>
-        <input type="text" name="title" id="title">
+        <% if (locals.game) { %>
+            <input type="text" name="title" id="title" value="<%= game.title %>">
+        <% } else { %>
+            <input type="text" name="title" id="title">
+        <% } %>
         <label for="img">Image link</label>
-        <input type="text" name="img" id="img">
+        <% if (locals.game) { %>
+            <input type="text" name="img" id="img" value="<%= game.img %>">
+        <% } else { %>
+            <input type="text" name="img" id="img">
+        <% } %>
         <label for="developer">Developer</label>
         <select name="developer" id="developer">
             <% locals.devs.forEach(dev => { %>
@@ -24,19 +32,48 @@
             <% }); %>
         </select>
         <label for="releaseYear">Release Year</label>
-        <input type="number" name="releaseYear" id="releaseYear">
+        <% if (locals.game) { %>
+            <input type="number" name="releaseYear" id="releaseYear" value="<%= game.releaseyear %>">
+        <% } else { %>
+            <input type="number" name="releaseYear" id="releaseYear">
+        <% } %>
+        
         <label for="description">Description</label>
-        <textarea name="description" id="description"></textarea>
+        <% if (locals.game) { %>
+            <textarea name="description" id="description"><%= game.description %></textarea>
+        <% } else { %>
+            <textarea name="description" id="description"></textarea>
+        <% } %>
         <label for="notes">Notes</label>
-        <textarea name="notes" id="notes"></textarea>
+        <% if (locals.game) { %>
+            <textarea name="notes" id="notes"><%= game.notes %></textarea>
+        <% } else { %>
+            <textarea name="notes" id="notes"></textarea>
+        <% } %>
         <fieldset>
             <legend>Have you completed the game?</legend>
             <div>
-                <input type="radio" name="isCompleted" value="true" id="true">
+                <% if (locals.game) { %>
+                    <%if (game.iscompleted) {%>
+                        <input type="radio" name="isCompleted" value="true" id="true" checked>
+                    <% } else { %>
+                        <input type="radio" name="isCompleted" value="true" id="true">
+                    <% } %>
+                <% } else { %>
+                    <input type="radio" name="isCompleted" value="true" id="true">
+                <% } %>
                 <label for="true">Yes</label>
             </div>
             <div>
-                <input type="radio" name="isCompleted" value="false" id="false" checked>
+                <% if (locals.game) { %>
+                    <%if (!game.iscompleted) {%>
+                        <input type="radio" name="isCompleted" value="false" id="false" checked>
+                    <% } else { %>
+                        <input type="radio" name="isCompleted" value="false" id="false">
+                    <% } %>
+                <% } else { %>
+                    <input type="radio" name="isCompleted" value="false" id="false" checked>
+                <% } %>
                 <label for="false">No</label>
             </div>
         </fieldset>
@@ -44,12 +81,20 @@
             <legend>Select genre/s:</legend>
             <% locals.genres.forEach(genre => { %>
                 <div>
-                    <input type="checkbox" id="genre-<%= genre.id %>" name="genre" value="<%= genre.id %>">
+                    <% if (locals.game) { %>
+                        <% if (game.genres.some(g => g.type === genre.type)) {%>
+                            <input type="checkbox" id="genre-<%= genre.id %>" name="genre" value="<%= genre.id %>" checked>
+                        <% } else { %>
+                            <input type="checkbox" id="genre-<%= genre.id %>" name="genre" value="<%= genre.id %>">
+                        <% } %>
+                    <% } else { %>
+                        <input type="checkbox" id="genre-<%= genre.id %>" name="genre" value="<%= genre.id %>">
+                    <% } %>
                     <label for="genre-<%= genre.id %>"><%= genre.type %></label>
                 </div>
             <% }); %>
         </fieldset>
-        <button type="submit">Add</button>
+        <button type="submit"><%= locals.action %></button>
     </form>
 </body>
 </html>

@@ -4,6 +4,7 @@ import {
   getAllDevelopers,
   createGame,
   getAllGenres,
+  updateGame,
 } from "../db/queries.js";
 import asyncHandler from "express-async-handler";
 import { validationResult } from "express-validator";
@@ -16,7 +17,12 @@ export const getGames = asyncHandler(async (req, res) => {
 export const createGameGet = asyncHandler(async (req, res) => {
   const developersList = await getAllDevelopers();
   const genresList = await getAllGenres();
-  res.render("gameForm", { devs: developersList, genres: genresList });
+  res.render("gameForm", {
+    action: "Add",
+    actionLink: "/games/new",
+    devs: developersList,
+    genres: genresList,
+  });
 });
 
 export const createGamePost = asyncHandler(async (req, res) => {
@@ -40,4 +46,31 @@ export const createGamePost = asyncHandler(async (req, res) => {
 export const gameInfoGet = asyncHandler(async (req, res) => {
   const selectedGame = await getGame(req.params.id);
   res.render("gameInfo", { game: selectedGame });
+});
+
+export const gameUpdateGet = asyncHandler(async (req, res) => {
+  const id = req.params.id;
+  const selectedGame = await getGame(id);
+  const developersList = await getAllDevelopers();
+  const genresList = await getAllGenres();
+
+  res.render("gameForm", {
+    action: "Update",
+    actionLink: "/games/" + id + "/update",
+    devs: developersList,
+    genres: genresList,
+    game: selectedGame,
+  });
+});
+
+export const gameUpdatePost = asyncHandler(async (req, res) => {
+  const id = req.params.id;
+  const updatedGameData = {
+    id: id,
+    ...req.body,
+    genre: [...req.body.genre],
+  };
+  await updateGame(updatedGameData);
+
+  res.redirect("/games/" + id);
 });

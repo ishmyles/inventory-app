@@ -5,6 +5,8 @@ import {
   createDevelopersGet,
   createDevelopersPost,
   developerInfoGet,
+  developerUpdateGet,
+  developerUpdatePost,
 } from "../controllers/developersController.js";
 
 const developersRouter = Router();
@@ -16,5 +18,13 @@ developersRouter.get("/new", createDevelopersGet);
 developersRouter.post("/new", validateDeveloperForm, createDevelopersPost);
 
 developersRouter.get("/:id", developerInfoGet);
+
+developersRouter.get("/:id/update", developerUpdateGet);
+
+developersRouter.post(
+  "/:id/update",
+  validateDeveloperForm,
+  developerUpdatePost
+);
 
 export default developersRouter;
